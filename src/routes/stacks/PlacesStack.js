@@ -1,16 +1,16 @@
 import react from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Account from "../../screens/Account";
+import Places from "../../views/places/Places";
 
 const Stack = createNativeStackNavigator();
 
-export default function AccountStack(){
+export default function PlacesStack(){
     return (
         <Stack.Navigator>
             <Stack.Screen
-                name="account"
-                component={Account}
-                options={{title: "Account"}}/>
+                name="places"
+                component={Places}
+                options={{title: "Places"}}/>
         </Stack.Navigator>
     )
 }

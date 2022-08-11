@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
-import Navigation from './app/navigations/Navigation';
+import Navigation from './src/routes/Navigation';
 
-import { firebaseApp } from './Firebase'; //TODO remove
-import { firebaseAuth } from './Firebase'; //TODO remove
+import { firebaseApp } from './src/config/Firebase'; //TODO remove
+import { firebaseAuth } from './src/config/Firebase'; //TODO remove
 
 export default function App() {
   useEffect(() => {

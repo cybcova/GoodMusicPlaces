@@ -1,16 +1,16 @@
 import react from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Search from "../../screens/Search";
+import TopPlaces from "../../views/top-places/TopPlaces";
 
 const Stack = createNativeStackNavigator();
 
-export default function SearchStack(){
+export default function PlacesStack(){
     return (
         <Stack.Navigator>
             <Stack.Screen
-                name="search"
-                component={Search}
-                options={{title: "Search"}}/>
+                name="top-places"
+                component={TopPlaces}
+                options={{title: "TopPlaces"}}/>
         </Stack.Navigator>
     )
 }
