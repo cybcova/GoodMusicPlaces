@@ -36,7 +36,6 @@ export default function App() {
     auth.onAuthStateChanged(user => { 
       console.log(user);
     });
-
     
   }, [])
   
