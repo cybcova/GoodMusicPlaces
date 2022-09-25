@@ -1,16 +1,17 @@
 import react from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Favorites from "../../views/favorites/Favorites";
+import Favorites from "../../screens/favorites/Favorites";
 
 const Stack = createNativeStackNavigator();
 
-export default function FavoritesStack(){
-    return (
-        <Stack.Navigator>
-            <Stack.Screen
-                name="favorites"
-                component={Favorites}
-                options={{title: "Favorites"}}/>
-        </Stack.Navigator>
-    )
+export default function FavoritesStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="favorites"
+        component={Favorites}
+        options={{ title: "Favorites" }}
+      />
+    </Stack.Navigator>
+  );
 }
