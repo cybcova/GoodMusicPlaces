@@ -9,10 +9,11 @@ const Stack = createNativeStackNavigator();
 export default function AccountStack() {
   return (
     <Stack.Navigator>
-      {/* <Stack.Screen
-                name="account"
-                component={Account}
-                options={{title: "Account"}}/> */}
+      <Stack.Screen
+        name="account"
+        component={Account}
+        options={{ title: "Account" }}
+      />
       <Stack.Screen
         name="login-screen"
         component={LoginScreen}

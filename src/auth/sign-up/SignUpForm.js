@@ -20,24 +20,18 @@ export default function SignUpForm() {
     validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
-      console.log(formValue);
-      console.log("AUTH::::::::::");
-      console.log(auth);
       const auth = getAuth();
-      console.log("AUTH::::::::::");
-      console.log(auth);
       createUserWithEmailAndPassword(auth, formValue.email, formValue.password)
         .then((userCredential) => {
           // Signed in
-          console.log(userCredential);
           const user = userCredential.user;
           // ...
         })
         .catch((error) => {
-          console.log(error);
           const errorCode = error.code;
           const errorMessage = error.message;
-          // ..
+
+          toast.error("This is an error!");
         });
     },
   });

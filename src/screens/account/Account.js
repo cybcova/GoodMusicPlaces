@@ -3,8 +3,8 @@ import { firebaseAuth } from "../../config/Firebase";
 
 import Loading from "../../components/Loading";
 
-import GuestUser from "./GuestUser";
-import UserLogged from "./UserLogged";
+import LoginScreen from "./LoginScreen";
+import UserScreen from "./UserScreen";
 
 export default function Account() {
   const [hasLogged, setHasLogged] = useState(null);
@@ -18,5 +18,5 @@ export default function Account() {
   if (hasLogged == null)
     return <Loading isVisible={true} text="cargando usuario..." />;
 
-  return hasLogged ? <UserLogged /> : <GuestUser />;
+  return hasLogged ? <UserScreen /> : <LoginScreen />;
 }
