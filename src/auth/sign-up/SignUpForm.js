@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
 import { onChange } from "react-native-reanimated";
-//import { styles } from "../../screens/account/SignUpScreen";
+import { initialValues, validationSchema } from "./SignUpForm.data";
+import { useFormik } from "formik";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function SignUpForm() {
   const [hidePassword, setHidePassword] = useState(true);
@@ -13,18 +15,40 @@ export default function SignUpForm() {
     repeatPassword: "",
   });
 
-  const onChangeForm = (e, type) => {
-    setFormSignIn({ ...formSignIn, [type]: e.nativeEvent.text });
-  };
-  //...(lo que traia)
-  //[] para que no agarre contenido lit
+  const formik = useFormik({
+    initialValues: initialValues(),
+    validationSchema: validationSchema(),
+    validateOnChange: false,
+    onSubmit: async (formValue) => {
+      console.log(formValue);
+      console.log("AUTH::::::::::");
+      console.log(auth);
+      const auth = getAuth();
+      console.log("AUTH::::::::::");
+      console.log(auth);
+      createUserWithEmailAndPassword(auth, formValue.email, formValue.password)
+        .then((userCredential) => {
+          // Signed in
+          console.log(userCredential);
+          const user = userCredential.user;
+          // ...
+        })
+        .catch((error) => {
+          console.log(error);
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // ..
+        });
+    },
+  });
 
   return (
     <View>
       <Input
         placeholder="Email"
         containerStyle={styles.inputForm}
-        onChange={(e) => onChangeForm(e, "email")}
+        onChangeText={(text) => formik.setFieldValue("email", text)}
+        errorMessage={formik.errors.email}
         rightIcon={
           <Icon
             type="material-community"
@@ -36,24 +60,27 @@ export default function SignUpForm() {
       <Input
         placeholder="Password"
         containerStyle={styles.inputForm}
-        onChange={(e) => onChangeForm(e, "password")}
         password={true}
         secureTextEntry={hidePassword}
+        onChangeText={(text) => formik.setFieldValue("password", text)}
+        errorMessage={formik.errors.password}
         rightIcon={visibilityPassword(hidePassword, setHidePassword)}
       />
       <Input
         placeholder="Repeat Password"
         containerStyle={styles.inputForm}
-        onChange={(e) => onChangeForm(e, "repeatPassword")}
         password={true}
         secureTextEntry={hideRepeatPassword}
+        onChangeText={(text) => formik.setFieldValue("repeatPassword", text)}
+        errorMessage={formik.errors.repeatPassword}
         rightIcon={visibilityPassword(hideRepeatPassword, setRepeatPassword)}
       />
       <Button
         title="Join"
         containerStyle={styles.btnContainerJoin}
         buttonStyle={styles.btnJoin}
-        onPress={() => console.log(formSignIn)}
+        onPress={formik.handleSubmit}
+        loading={formik.isSubmitting}
       />
     </View>
   );
