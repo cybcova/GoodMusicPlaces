@@ -5,6 +5,7 @@ import { onChange } from "react-native-reanimated";
 import { initialValues, validationSchema } from "./SignUpForm.data";
 import { useFormik } from "formik";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import Toast from "react-native-toast-message";
 
 export default function SignUpForm() {
   const [hidePassword, setHidePassword] = useState(true);
@@ -31,7 +32,12 @@ export default function SignUpForm() {
           const errorCode = error.code;
           const errorMessage = error.message;
 
-          toast.error("This is an error!");
+          Toast.show({
+            type: "error",
+            position: "top",
+            text1: errorCode,
+            text2: errorMessage,
+          });
         });
     },
   });

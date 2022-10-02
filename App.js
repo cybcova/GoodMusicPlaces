@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Navigation from "./src/routes/Navigation";
+import Toast from "react-native-toast-message";
 
 import { firebaseApp } from "./src/config/Firebase"; //TODO remove
 
@@ -11,5 +12,10 @@ export default function App() {
     
   }, [])*/
 
-  return <Navigation />;
+  return (
+    <>
+      <Navigation />
+      <Toast />
+    </>
+  );
 }
