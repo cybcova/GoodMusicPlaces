@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
 import { Divider } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
+import LogInForm from "../../auth/log-in/LogInForm";
 
 export default function LoginScreen() {
   const localNavigator = useNavigation();
@@ -17,8 +18,6 @@ export default function LoginScreen() {
       <Text style={styles.titleP}>Places</Text>
 
       <View style={styles.content}>
-        {/* <LoginForm /> */}
-
         <Text style={styles.textRegister}>
           New to here?{" "}
           <Text
@@ -33,12 +32,14 @@ export default function LoginScreen() {
           .
         </Text>
       </View>
+      <View style={styles.content}>{<LogInForm />}</View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   logo: {
+    resizeMode: "contain",
     width: "100%",
     height: 150,
     marginTop: 20,
@@ -56,10 +57,11 @@ const styles = StyleSheet.create({
     fontSize: 19,
     textAlign: "center",
   },
-  content: {},
+  content: {
+    marginHorizontal: 40,
+  },
   textRegister: {
     marginTop: 15,
-
     textAlign: "center",
   },
   btnRegister: {

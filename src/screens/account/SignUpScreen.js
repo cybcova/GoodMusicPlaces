@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
     fontSize: 19,
     textAlign: "center",
   },
-
   titleP: {
     fontWeight: "bold",
     fontSize: 19,

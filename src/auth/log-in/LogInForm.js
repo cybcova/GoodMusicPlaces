@@ -2,15 +2,14 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
 import { onChange } from "react-native-reanimated";
-import { initialValues, validationSchema } from "./SignUpForm.data";
+import { initialValues, validationSchema } from "./LogInForm.data";
 import { useFormik } from "formik";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import Toast from "react-native-toast-message";
 import { useNavigation } from "@react-navigation/native";
 
-export default function SignUpForm() {
+export default function LogInForm() {
   const [hidePassword, setHidePassword] = useState(true);
-  const [hideRepeatPassword, setRepeatPassword] = useState(true);
   const navigation = useNavigation();
 
   const formik = useFormik({
@@ -19,7 +18,7 @@ export default function SignUpForm() {
     validateOnChange: false,
     onSubmit: async (formValue) => {
       const auth = getAuth();
-      createUserWithEmailAndPassword(auth, formValue.email, formValue.password)
+      signInWithEmailAndPassword(auth, formValue.email, formValue.password)
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
@@ -29,7 +28,6 @@ export default function SignUpForm() {
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-
           Toast.show({
             type: "error",
             position: "top",
@@ -64,17 +62,8 @@ export default function SignUpForm() {
         errorMessage={formik.errors.password}
         rightIcon={visibilityPassword(hidePassword, setHidePassword)}
       />
-      <Input
-        placeholder="Repeat Password"
-        containerStyle={styles.inputForm}
-        password={true}
-        secureTextEntry={hideRepeatPassword}
-        onChangeText={(text) => formik.setFieldValue("repeatPassword", text)}
-        errorMessage={formik.errors.repeatPassword}
-        rightIcon={visibilityPassword(hideRepeatPassword, setRepeatPassword)}
-      />
       <Button
-        title="Join"
+        title="Log In"
         containerStyle={styles.btnContainerJoin}
         buttonStyle={styles.btnJoin}
         onPress={formik.handleSubmit}
