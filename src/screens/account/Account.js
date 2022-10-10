@@ -8,15 +8,23 @@ import UserScreen from "./UserScreen";
 
 export default function Account() {
   const [hasLogged, setHasLogged] = useState(null);
+  const [userLogged, setUserLogged] = useState(null);
+
   useEffect(() => {
     firebaseAuth.onAuthStateChanged((user) => {
-      console.log(user);
       setHasLogged(user ? true : false);
+      setUserLogged(user ? user : null);
     });
+
+    if (hasLogged) {
+      console.log("[Account]");
+      console.log("userLogged:");
+      console.log(JSON.stringify(userLogged, null, 2));
+    }
   }, []);
 
   if (hasLogged == null)
     return <Loading isVisible={true} text="cargando usuario..." />;
 
-  return hasLogged ? <UserScreen /> : <LoginScreen />;
+  return userLogged ? <UserScreen /> : <LoginScreen />;
 }
