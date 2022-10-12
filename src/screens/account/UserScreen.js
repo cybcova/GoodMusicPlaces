@@ -16,7 +16,7 @@ export default function UserScreen() {
   console.log("[UserScreen]");
   console.log("Auth:");
   console.log(JSON.stringify(auth, null, 2));
-  console.log("Auth.CurrentUser:::::::::::::::::");
+  console.log("Auth.CurrentUser:");
   console.log(JSON.stringify(auth.currentUser, null, 2));
 
   return (
