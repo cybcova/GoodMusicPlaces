@@ -45,6 +45,7 @@ export function InfoUser(currentUser) {
   };
 
   const uploadImage = async (uri) => {
+    console.log("uid PRESENTE:" + uid);
     const response = await fetch(uri);
     console.log(JSON.stringify(response, null, 2));
     const blob = await response.blob();
@@ -55,7 +56,8 @@ export function InfoUser(currentUser) {
     console.log(JSON.stringify(storage, null, 2));
 
     // Create a reference
-    const imageRef = ref(storage, "avatars/" + "uid" + ".jpg");
+    const imageRef = ref(storage, "avatars/" + uid + ".jpg");
+    console.log(JSON.stringify(imageRef, null, 2));
     const storageRef = ref(storage, imageRef);
 
     // 'file' comes from the Blob or File API
