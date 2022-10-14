@@ -26,5 +26,5 @@ export default function Account() {
   if (hasLogged == null)
     return <Loading isVisible={true} text="cargando usuario..." />;
 
-  return userLogged ? <UserScreen /> : <LoginScreen />;
+  return hasLogged ? <UserScreen /> : <LoginScreen />;
 }
