@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Avatar, Text } from "react-native-elements";
-import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
 import {
   getStorage,
@@ -20,7 +19,6 @@ export function InfoUser(props) {
   console.log(JSON.stringify(props, null, 2));
 
   //console.log(JSON.stringify(user, null, 2));
-  //const { setLoading, setLoadingText } = props;
   const {
     authenticatedUser: {
       currentUser: { uid, photoURL, displayName, email },
@@ -52,7 +50,7 @@ export function InfoUser(props) {
     //getPermissionAsync;
     console.log("function: changeAvatar");
     const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    console.log(granted);
+    JSON.stringify(granted, null, 2);
     if (granted) {
       const imageResult = await ImagePicker.launchImageLibraryAsync({
         allowsEditing: true,
@@ -100,13 +98,13 @@ export function InfoUser(props) {
         setLoading(false);
 
         console.log("Uploaded a blob or file!");
-        console.log(snapshot);
+        console.log(JSON.stringify(snapshot, null, 2));
         updatedPhotoUrl(imageRef);
       })
       .catch((e) => {
         console.log("ERROR!!!!");
 
-        console.log(e);
+        console.log(JSON.stringify(e, null, 2));
       });
   };
 
@@ -115,11 +113,11 @@ export function InfoUser(props) {
     setLoadingText("updating photo");
     console.log("function: updatedPhotoUrl");
     console.log("imageRef:");
-    console.log(imageRef);
+    console.log(JSON.stringify(imageRef, null, 2));
     await getDownloadURL(imageRef)
       .then(async (url) => {
-        console.log("getDownloadURL:");
-        console.log(url);
+        //console.log("getDownloadURL:");
+        //console.log(url);
         const auth = getAuth();
         await updateProfile(auth.currentUser, {
           photoURL: url,
@@ -128,17 +126,18 @@ export function InfoUser(props) {
             setLoading(false);
             console.log("updateProfile:");
             console.log("Profile updated!");
-            console.log(auth);
+            console.log(JSON.stringify(auth, null, 2));
+            setAvatar(url);
             // Profile updated!
             // ...
           })
           .catch((error) => {
             console.log("error!");
-            console.log(error);
+            console.log(JSON.stringify(error, null, 2));
             // An error occurred
             // ...
           });
-        setAvatar(url);
+
         // `url` is the download URL for 'images/stars.jpg'
 
         /* This can be downloaded directly:
@@ -156,7 +155,7 @@ export function InfoUser(props) {
       })
       .catch((error) => {
         console.log("error!");
-        console.log(error);
+        console.log(JSON.stringify(error, null, 2));
         // Handle any errors
       });
   };

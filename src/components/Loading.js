@@ -5,7 +5,7 @@ import { Overlay } from "react-native-elements/dist/overlay/Overlay";
 export default function Loading(props) {
   console.log("function: Loading");
   const { isVisible, text } = props;
-  console.log(text);
+  console.log(JSON.stringify(text, null, 2));
   return (
     <Overlay isVisible={isVisible} overlayStyle={styles.overlay}>
       <View style={styles.view}>
