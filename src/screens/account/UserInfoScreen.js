@@ -3,7 +3,12 @@ import { View, StyleSheet } from "react-native";
 import { Avatar, Text } from "react-native-elements";
 import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
-import { getStorage, getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+  getStorage,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { getAuth, updateProfile } from "firebase/auth";
 import Toast from "react-native-toast-message";
 
@@ -27,20 +32,19 @@ export function InfoUser(props) {
 
   const [avatar, setAvatar] = useState(photoURL);
 
-  const getPermissionAsync = async () => {
+  const getMediaLibraryPermissionAsync = async () => {
     console.log("function: getPermissionAsync");
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     console.log("Permisos:");
-    if (status !== "granted") {
-      console.log("Denegados");
+    if (granted) {
+      return true;
+    } else {
       Toast.show({
         type: "error",
         position: "top",
-        text1: "Permiso Denedados :(",
+        text1: "Denied Permissions :(",
+        text2: "Please allow the access to the photo library in the settings",
       });
-    } else {
-      console.log("Permitidos");
-      console.log(status);
+      return false;
     }
   };
 
@@ -73,6 +77,7 @@ export function InfoUser(props) {
     setLoading(true);
     setLoadingText("uploading photo");
 
+    //convert image to array of bytes
     const response = await fetch(uri);
     console.log("fetch uri");
     const blob = await response.blob();
@@ -89,7 +94,7 @@ export function InfoUser(props) {
     console.log("storageRef");
 
     // 'file' comes from the Blob or File API
-    uploadBytes(storageRef, blob)
+    uploadBytesResumable(storageRef, blob)
       .then((snapshot) => {
         console.log("then upload bytes");
         setLoading(false);
