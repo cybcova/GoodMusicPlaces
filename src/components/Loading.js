@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import { Overlay } from "react-native-elements/dist/overlay/Overlay";
 
 export default function Loading(props) {
+  console.log("function: Loading");
   const { isVisible, text } = props;
   console.log(text);
   return (

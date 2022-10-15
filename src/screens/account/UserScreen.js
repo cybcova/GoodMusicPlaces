@@ -2,14 +2,12 @@ import react, { useState, useRef } from "react";
 import { View, Text } from "react-native";
 import { Button } from "react-native-elements";
 import { getAuth, signOut } from "firebase/auth";
-import { Toast } from "react-native-toast-message/lib/src/Toast";
 import Loading from "../../components/Loading";
 import { InfoUser } from "./UserInfoScreen";
 
 export default function UserScreen() {
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState("");
-  const toastRef = useRef();
 
   const auth = getAuth();
 
@@ -21,7 +19,7 @@ export default function UserScreen() {
 
   return (
     <View>
-      <InfoUser currentUser={auth.currentUser} />
+      <InfoUser authenticatedUser={auth} />
       <Button title="Sign Out" onPress={() => thisSignOut(auth)} />
       {/* <Toast ref={toastRef} position="center" opacity={0.9} /> */}
       <Loading text={loadingText} isVisible={loading} />
@@ -31,11 +29,19 @@ export default function UserScreen() {
 
 function thisSignOut(auth) {
   console.log("Se apreto el boton de cierre de sesion");
+
+  console.log("auth:");
+  console.log(JSON.stringify(auth, null, 2));
+  console.log("getAuth:");
+  console.log(JSON.stringify(getAuth(), null, 2));
+
   signOut(auth)
     .then(() => {
-      // Sign-out successful.
+      console.log("logged out");
+      console.log("auth");
+      console.log(auth);
     })
     .catch((error) => {
-      // An error happened.
+      console.log("Error", error);
     });
 }
